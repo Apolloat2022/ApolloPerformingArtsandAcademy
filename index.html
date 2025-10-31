@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Apollo Performing Arts & Academy — Frisco, TX</title>
+  <meta name="description" content="Premier music education for all ages at Apollo Performing Arts & Academy in Frisco, TX. Book a trial lesson, view programs, and enroll today." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0f1724; /* deep navy */
+      --card:#0b1320;
+      --muted:#9aa6bf;
+      --accent:#ffb703; /* warm gold */
+      --accent-2:#6dd3ff; /* sky */
+      --glass: rgba(255,255,255,0.04);
+      --radius:16px;
+      --maxwidth:1200px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: linear-gradient(180deg,#071021 0%, #081426 40%); color:#e6eef8; -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale; line-height:1.45;
+    }
+
+    a{color:inherit;text-decoration:none}
+
+    .container{max-width:var(--maxwidth);margin:0 auto;padding:32px}
+
+    /* NAV */
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand img{height:56px;width:56px;object-fit:contain;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));padding:6px}
+    .brand h1{font-family:'Playfair Display';font-size:1.15rem;margin:0}
+
+    nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+    nav ul li{font-weight:600;color:var(--muted)}
+
+    .cta-group{display:flex;gap:10px;align-items:center}
+    .btn{background:linear-gradient(90deg,var(--accent),#ff8a00);border:none;padding:10px 16px;border-radius:12px;color:#061826;font-weight:700;cursor:pointer}
+    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 14px;border-radius:12px;color:var(--muted)}
+
+    /* Mobile menu */
+    .mobile-toggle{display:none;background:transparent;border:0;color:var(--muted);font-weight:700}
+
+    /* HERO */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center;padding:48px 0}
+    .eyebrow{display:inline-block;background:var(--glass);padding:6px 10px;border-radius:999px;color:var(--accent);font-weight:700;margin-bottom:14px}
+    .headline{font-family:'Playfair Display';font-size:2.05rem;margin:0 0 14px}
+    .lead{color:var(--muted);margin-bottom:20px}
+
+    .features{display:flex;gap:12px;flex-wrap:wrap}
+    .feature{background:rgba(255,255,255,0.03);padding:12px;border-radius:12px;min-width:160px}
+
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:20px;border-radius:20px}
+    .hero-card h3{margin-top:0}
+
+    /* Programs grid */
+    .programs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:36px 0}
+    .card{background:var(--card);border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.03)}
+    .price{font-weight:800;font-size:1.25rem;color:var(--accent)}
+    .most-popular{box-shadow:0 8px 32px rgba(0,0,0,0.6);transform:translateY(-6px);border:1px solid rgba(255,183,3,0.12)}
+
+    /* Gallery / Video */
+    .media-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    iframe{width:100%;height:100%;border-radius:12px;border:0}
+
+    /* Pricing table */
+    .pricing{display:flex;gap:12px;flex-wrap:wrap}
+    .pricing .card{flex:1;min-width:220px}
+
+    /* Contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 420px;gap:20px}
+    .contact-card{padding:18px}
+
+    /* Footer */
+    footer{margin-top:40px;padding:28px 0;border-top:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+
+    /* Utilities */
+    .muted{color:var(--muted)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);font-weight:700}
+
+    /* Responsive */
+    @media (max-width:940px){
+      .hero{grid-template-columns:1fr;padding:28px 0}
+      .contact-grid{grid-template-columns:1fr}
+      .programs{grid-template-columns:repeat(2,1fr)}
+      nav ul{display:none}
+      .mobile-toggle{display:inline-block}
+    }
+    @media (max-width:640px){
+      .programs{grid-template-columns:1fr}
+      .brand img{height:44px;width:44px}
+      .headline{font-size:1.6rem}
+      .hero{gap:18px}
+      .hero-card{display:none}
+    }
+
+    /* Small helpers */
+    .grid{display:grid}
+    .gap-8{gap:8px}
+    .text-center{text-align:center}
+
+    /* subtle animations */
+    .fade-up{opacity:0;transform:translateY(8px);animation:fadeUp .7s forwards}
+    @keyframes fadeUp{to{opacity:1;transform:none}}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="nav">
+      <div class="brand">
+        <img src="/Logo.png" alt="Apollo Performing Arts logo"/>
+        <div>
+          <h1>Apollo Performing Arts</h1>
+          <div class="muted" style="font-size:0.8rem">Frisco, TX • Since 2017</div>
+        </div>
+      </div>
+
+      <nav>
+        <button class="mobile-toggle" id="mobileToggle">Menu</button>
+        <ul id="navList">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#talentshow">Talent Show</a></li>
+          <li><a href="#enroll">Enrollment</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="cta-group">
+        <a class="btn" href="https://calendly.com/robinpandey-apollotunes/30min" target="_blank" rel="noopener">Book Free Trial</a>
+        <a class="btn-outline" href="https://pci.jotform.com/form/223423546401144" target="_blank" rel="noopener">Enrollment Form</a>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="home" class="hero" style="margin-top:18px">
+      <div>
+        <div class="eyebrow">Unleash Your Musical Potential</div>
+        <h2 class="headline">Premier music education for all ages and skill levels.</h2>
+        <p class="lead">Join our community of passionate musicians at Apollo Performing Arts & Academy in Frisco, TX. Private lessons, performing teams, and regular student recitals — built to take you from practice to performance.</p>
+
+        <div class="features">
+          <div class="feature">Professional Instructors</div>
+          <div class="feature">Performance Opportunities</div>
+          <div class="feature">Trial Lessons</div>
+        </div>
+
+        <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
+          <a class="btn" href="https://calendly.com/robinpandey-apollotunes/30min" target="_blank" rel="noopener">Book a Free Trial Lesson</a>
+          <a class="btn-outline" href="#programs">Explore Programs</a>
+          <a class="btn-outline" href="mailto:Robinpandey@apollotunes.com">Let's Chat</a>
+        </div>
+
+        <div style="margin-top:26px;display:flex;gap:12px;align-items:center">
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="width:60px;height:60px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#071826">AP</div>
+            <div>
+              <div style="font-weight:800">Professional Music Instruction</div>
+              <div class="muted">Performance, technique, and confidence building</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="hero-card fade-up">
+        <h3>Quick Details</h3>
+        <p class="muted">Located in Frisco, TX — welcoming students ages 5 to adult.</p>
+        <ul style="margin:12px 0;padding-left:18px;color:var(--muted)">
+          <li>Trial Lesson: $75 (15-30 minutes)</li>
+          <li>Registration Fee: $75</li>
+          <li>Contact: Robinpandey@apollotunes.com</li>
+        </ul>
+        <a class="btn" href="#enroll">Register for Intro Class</a>
+      </aside>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="grid" style="gap:12px">
+        <h2>About Apollo Performing Arts</h2>
+        <p class="muted">At Apollo Performing Arts & Academy, we're dedicated to teaching students to perform confidently — whether for personal enjoyment, family, friends, or public audiences. Our program typically spans 3–5 years depending on student's age and experience. We offer Regular Lessons and Advanced Lessons, with Performing Teams available by audition.</p>
+
+        <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:12px">
+          <div class="card" style="flex:1;min-width:220px">
+            <h3>Our Mission</h3>
+            <p class="muted">Supportive instructors, thoughtful curriculum, and real performance experience.</p>
+          </div>
+          <div class="card" style="flex:1;min-width:220px">
+            <h3>Visit Our Academy</h3>
+            <p class="muted">7511 Main Street, Suite 200, Frisco, TX 75034</p>
+            <a class="btn-outline" href="https://goo.gl/maps/" target="_blank">Get directions</a>
+          </div>
+          <div class="card" style="flex:1;min-width:220px">
+            <h3>Contact</h3>
+            <p class="muted">833-813-0668 • Robinpandey@apollotunes.com</p>
+            <div style="margin-top:8px;display:flex;gap:8px">
+              <a class="btn-outline" href="https://www.facebook.com/ApolloPerformingArtsandAcademy/" target="_blank">Facebook</a>
+              <a class="btn-outline" href="https://www.instagram.com/apollo.performingarts/" target="_blank">Instagram</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAMS -->
+    <section id="programs">
+      <h2 style="margin-top:24px">Our Music Programs</h2>
+      <div class="programs">
+        <div class="card">
+          <h3>Regular Lessons</h3>
+          <p class="muted">Perfect for students beginning or continuing their musical journey.</p>
+          <ul class="muted" style="padding-left:18px">
+            <li>4 half-hour lessons per month</li>
+            <li>Private or group lessons</li>
+            <li>Performance opportunities</li>
+          </ul>
+          <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+            <div class="price">$300 / month</div>
+            <a class="btn" href="#enroll">Enroll Now</a>
+          </div>
+        </div>
+
+        <div class="card most-popular">
+          <h3>Extended Lessons <span class="pill muted">Most Popular</span></h3>
+          <p class="muted">45–60 minutes weekly for students seeking deeper progress.</p>
+          <ul class="muted" style="padding-left:18px">
+            <li>4 lessons monthly</li>
+            <li>Enhanced instruction</li>
+          </ul>
+          <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+            <div class="price">$350–450 / month</div>
+            <a class="btn" href="#enroll">Enroll Now</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Advanced Program</h3>
+          <p class="muted">For dedicated students — performing team included.</p>
+          <ul class="muted" style="padding-left:18px">
+            <li>3 hours per week (12 hours monthly)</li>
+            <li>Performing Team participation</li>
+          </ul>
+          <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+            <div class="price">$700 / month</div>
+            <a class="btn" href="#enroll">Enroll Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY & VIDEO -->
+    <section id="gallery">
+      <h2 style="margin-top:24px">Watch & See Our Students in Action</h2>
+      <div class="media-grid" style="margin-top:12px">
+        <div class="card" style="min-height:250px">
+          <!-- Embedded YouTube promotion -->
+          <iframe src="https://www.youtube.com/embed/lhT6I6D_3Rk" title="Apollo Performing Arts & Academy Promotion" allowfullscreen></iframe>
+        </div>
+        <div class="card" style="min-height:250px;display:flex;flex-direction:column;gap:8px">
+          <div>
+            <strong>Talent Show Photos</strong>
+            <p class="muted">See snapshots from past talent shows and student performances on our Facebook page.</p>
+            <a class="btn-outline" href="https://www.facebook.com/ApolloPerformingArtsandAcademy/photos" target="_blank">View Photos</a>
+          </div>
+
+          <div style="margin-top:10px">
+            <strong>Student Reels</strong>
+            <p class="muted">Short performance clips and behind-the-scenes.</p>
+            <a class="btn-outline" href="https://www.facebook.com/ApolloPerformingArtsandAcademy/reels/" target="_blank">View Reels</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing">
+      <h2 style="margin-top:24px">Tuition & Packages</h2>
+      <div class="pricing" style="margin-top:12px">
+        <div class="card">
+          <h3>Regular Lessons</h3>
+          <div class="price">$300/month</div>
+          <p class="muted">30 minutes/week — 4 lessons monthly.</p>
+          <a class="btn" href="#enroll">Enroll</a>
+        </div>
+        <div class="card most-popular">
+          <h3>Extended Lessons</h3>
+          <div class="price">$350–450/month</div>
+          <p class="muted">45–60 minutes/week.</p>
+          <a class="btn" href="#enroll">Enroll</a>
+        </div>
+        <div class="card">
+          <h3>Advanced Program</h3>
+          <div class="price">$700/month</div>
+          <p class="muted">3 hours/week — includes Performing Team.</p>
+          <a class="btn" href="#enroll">Enroll</a>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:12px">Registration Fee: $75 | Trial Lesson: $75 (15–30 minutes)</p>
+    </section>
+
+    <!-- TALENT SHOW -->
+    <section id="talentshow">
+      <h2 style="margin-top:24px">Apollo Talent Shows</h2>
+      <p class="muted">Twice yearly talent shows and award ceremonies. All students are encouraged to participate. Performing Team members will have additional opportunities.</p>
+      <div style="display:flex;gap:12px;margin-top:12px">
+        <a class="btn-outline" href="https://www.facebook.com/ApolloPerformingArtsandAcademy/" target="_blank">See Past Shows</a>
+        <a class="btn" href="#enroll">Register to Participate</a>
+      </div>
+    </section>
+
+    <!-- ENROLLMENT -->
+    <section id="enroll">
+      <h2 style="margin-top:24px">Begin Your Musical Journey — Enrollment</h2>
+      <div class="contact-grid" style="margin-top:12px">
+        <div class="card contact-card">
+          <h3>Enrollment Process</h3>
+          <ol class="muted">
+            <li>Book a Trial Lesson: 15–30 min ($75)</li>
+            <li>Assessment & Program Selection</li>
+            <li>Complete Registration — $75</li>
+            <li>Submit first & last month's tuition 48 hours before first lesson</li>
+          </ol>
+
+          <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn" href="https://calendly.com/robinpandey-apollotunes/30min" target="_blank">Book Trial</a>
+            <a class="btn-outline" href="https://pci.jotform.com/form/223423546401144" target="_blank">Open Enrollment Form</a>
+            <a class="btn-outline" href="mailto:Robinpandey@apollotunes.com">Email Us</a>
+          </div>
+        </div>
+
+        <aside class="card" style="padding:18px">
+          <h3>Contact & Office</h3>
+          <p class="muted">7511 Main Street, Suite 200<br>Frisco, TX 75034</p>
+          <p class="muted">Phone: 833-813-0668 (Main) • 469-616-1950 (Direct — no calls after 9 PM)</p>
+          <p class="muted">Office Hours: Mon–Fri 9AM–8PM · Sat 9AM–5PM · Sun by appt</p>
+
+          <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+            <a class="btn-outline" href="https://www.facebook.com/ApolloPerformingArtsandAcademy/" target="_blank">Facebook</a>
+            <a class="btn-outline" href="https://www.instagram.com/apollo.performingarts/" target="_blank">Instagram</a>
+            <a class="btn-outline" href="https://www.youtube.com/@HumanExpressiontv" target="_blank">YouTube</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2 style="margin-top:24px">Contact Us</h2>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;align-items:flex-start">
+        <div class="card" style="flex:1;min-width:240px">
+          <h3>Quick Actions</h3>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <a class="btn" href="https://calendly.com/robinpandey-apollotunes/30min" target="_blank">Book a Free Trial Lesson</a>
+            <a class="btn-outline" href="https://pci.jotform.com/form/223423546401144" target="_blank">Enrollment Form</a>
+            <a class="btn-outline" href="#enroll">Register for Intro Class</a>
+          </div>
+        </div>
+
+        <div class="card" style="flex:1;min-width:240px">
+          <h3>Message Us</h3>
+          <!-- Simple contact form that forwards to email using mailto (replace when adding backend) -->
+          <form id="contactForm">
+            <label class="muted">Name</label>
+            <input id="name" required placeholder="Your name" style="width:100%;padding:10px;border-radius:8px;border:0;margin:6px 0;background:rgba(255,255,255,0.02);color:inherit" />
+            <label class="muted">Email</label>
+            <input id="email" type="email" required placeholder="you@example.com" style="width:100%;padding:10px;border-radius:8px;border:0;margin:6px 0;background:rgba(255,255,255,0.02);color:inherit" />
+            <label class="muted">Message</label>
+            <textarea id="message" rows="4" required placeholder="How can we help?" style="width:100%;padding:10px;border-radius:8px;border:0;margin:6px 0;background:rgba(255,255,255,0.02);color:inherit"></textarea>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button type="submit" class="btn">Send</button>
+              <a class="btn-outline" href="tel:8338130668">Call Us</a>
+            </div>
+            <div id="formStatus" class="muted" style="margin-top:8px"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <div>
+          <strong>Apollo Performing Arts & Academy</strong>
+          <div class="muted">Professional music education in Frisco, TX. Teaching students to perform confidently since 2017.</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <a class="muted" href="#home">Home</a>
+          <a class="muted" href="#about">About</a>
+          <a class="muted" href="#programs">Programs</a>
+          <a class="muted" href="#contact">Contact</a>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <div class="muted">© 2025 Apollo Performing Arts & Academy. All rights reserved.</div>
+        <div style="display:flex;gap:8px">
+          <a class="muted" href="https://www.facebook.com/ApolloPerformingArtsandAcademy/" target="_blank">Facebook</a>
+          <a class="muted" href="https://www.instagram.com/apollo.performingarts/" target="_blank">Instagram</a>
+          <a class="muted" href="https://www.youtube.com/@HumanExpressiontv" target="_blank">YouTube</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Mobile toggle
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navList = document.getElementById('navList');
+    mobileToggle.addEventListener('click', ()=>{
+      if(navList.style.display === 'flex') navList.style.display='none';
+      else navList.style.display='flex';
+    });
+
+    // Smooth internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(href.startsWith('#')){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      });
+    });
+
+    // Simple contact form (opens mailto) — replace with backend integration if available
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      if(!name||!email||!message){document.getElementById('formStatus').textContent='Please complete all fields.';return}
+      const subject = encodeURIComponent('Website contact from ' + name);
+      const body = encodeURIComponent('Name: '+name+'\nEmail: '+email+'\n\n'+message);
+      window.location.href = 'mailto:Robinpandey@apollotunes.com?subject='+subject+'&body='+body;
+      document.getElementById('formStatus').textContent='Opening your email client...';
+    });
+
+    // Small accessibility: reduce motion for users who prefer it
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      document.querySelectorAll('.fade-up').forEach(el=>el.style.animation='none');
+    }
+  </script>
+</body>
+</html>
