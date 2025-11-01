@@ -82,32 +82,49 @@
             box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
         }
         
-        /* Gallery specific styles */
-        .gallery-item {
-            transition: transform 0.3s ease;
-        }
+  /* Gallery specific styles */
+.gallery-item {
+    transition: transform 0.3s ease;
+}
 
-        .gallery-item:hover {
-            transform: translateY(-5px);
-        }
+.gallery-item:hover {
+    transform: translateY(-5px);
+}
 
-        .aspect-w-4 {
-            position: relative;
-        }
+.aspect-square {
+    aspect-ratio: 1 / 1;
+}
 
-        .aspect-w-4::before {
-            content: '';
-            display: block;
-            padding-bottom: 75%; /* 4:3 aspect ratio */
-        }
+/* Hide scrollbar for mobile gallery */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
 
-        .aspect-h-3 {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-        }
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Remove the old aspect ratio styles since we're using aspect-square */
+/*
+.aspect-w-4 {
+    position: relative;
+}
+
+.aspect-w-4::before {
+    content: '';
+    display: block;
+    padding-bottom: 75%; 
+}
+
+.aspect-h-3 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+*/
 
         /* For browsers that don't support aspect ratio */
         @supports not (aspect-ratio: 4 / 3) {
@@ -334,50 +351,70 @@
         </div>
     </section>
 
-   <!-- Gallery Section -->
+ <!-- Gallery Section - Fixed -->
 <section id="gallery" class="py-20 bg-black">
     <div class="container mx-auto px-4">
         <h2 class="text-4xl font-bold text-center mb-4 gold-text" data-aos="fade-up">Student Gallery</h2>
         <p class="text-xl text-center mb-12 max-w-2xl mx-auto" data-aos="fade-up">Capturing moments of inspiration, dedication, and artistic expression</p>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Piano Student -->
+        <!-- Desktop View - Grid Layout -->
+        <div class="hidden md:grid grid-cols-2 lg:grid-cols-5 gap-6">
             <div class="gallery-item" data-aos="zoom-in">
-                <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden shadow-lg">
+                <div class="aspect-square rounded-lg overflow-hidden shadow-lg">
                     <img src="Pianostudent.png" alt="Piano Student" class="w-full h-full object-cover">
                 </div>
             </div>
-            
-            <!-- Student Band -->
             <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
-                <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden shadow-lg">
+                <div class="aspect-square rounded-lg overflow-hidden shadow-lg">
                     <img src="Studentband.png" alt="Student Band" class="w-full h-full object-cover">
                 </div>
             </div>
-            
-            <!-- Student Singing -->
             <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
-                <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden shadow-lg">
+                <div class="aspect-square rounded-lg overflow-hidden shadow-lg">
                     <img src="Studentsinging.png" alt="Student Singing" class="w-full h-full object-cover">
                 </div>
             </div>
-            
-            <!-- Teacher Teaching -->
             <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
-                <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden shadow-lg">
+                <div class="aspect-square rounded-lg overflow-hidden shadow-lg">
                     <img src="Teacherteaching.png" alt="Teacher Teaching" class="w-full h-full object-cover">
                 </div>
             </div>
-            
-            <!-- Violin Student -->
             <div class="gallery-item" data-aos="zoom-in" data-aos-delay="400">
-                <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden shadow-lg">
+                <div class="aspect-square rounded-lg overflow-hidden shadow-lg">
                     <img src="Violinstudent.png" alt="Violin Student" class="w-full h-full object-cover">
                 </div>
             </div>
-            
-            <!-- Empty placeholder to maintain grid layout -->
-            <div class="hidden sm:block lg:hidden"></div>
+        </div>
+        
+        <!-- Mobile View - Horizontal Scroll -->
+        <div class="md:hidden">
+            <div class="flex space-x-4 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide" id="gallery-scroll">
+                <div class="flex-none w-64 gallery-item" data-aos="zoom-in">
+                    <div class="aspect-square rounded-lg overflow-hidden shadow-lg">
+                        <img src="Pianostudent.png" alt="Piano Student" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="flex-none w-64 gallery-item" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="aspect-square rounded-lg overflow-hidden shadow-lg">
+                        <img src="Studentband.png" alt="Student Band" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="flex-none w-64 gallery-item" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="aspect-square rounded-lg overflow-hidden shadow-lg">
+                        <img src="Studentsinging.png" alt="Student Singing" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="flex-none w-64 gallery-item" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="aspect-square rounded-lg overflow-hidden shadow-lg">
+                        <img src="Teacherteaching.png" alt="Teacher Teaching" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="flex-none w-64 gallery-item" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="aspect-square rounded-lg overflow-hidden shadow-lg">
+                        <img src="Violinstudent.png" alt="Violin Student" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
