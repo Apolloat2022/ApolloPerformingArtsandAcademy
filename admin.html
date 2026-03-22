@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apollo Enrollment Engine</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- AOS Animations -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --gold:      #D4AF37;
+      --dark-gold: #B8860B;
+      --black:     #0F0F0F;
+      --card:      #141414;
+      --card2:     #1a1a1a;
+      --white:     #F5F5F5;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* ── Colors ─────────────────────────────────────────────── */
+    .gold-text   { color: var(--gold); }
+    .gold-border { border-color: var(--gold); }
+
+    /* ── Card ────────────────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 0.5rem;
+      transition: border-color 0.3s;
+    }
+    .card:hover { border-color: rgba(212, 175, 55, 0.4); }
+
+    /* ── Inputs ──────────────────────────────────────────────── */
+    .inp {
+      background: #0a0a0a;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      color: var(--white);
+      border-radius: 0.375rem;
+      padding: 0.75rem 1rem;
+      width: 100%;
+      font-size: 0.875rem;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .inp:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.12);
+    }
+    .inp::placeholder { color: #4a4a4a; }
+    .inp option { background: #141414; }
+
+    /* ── Buttons ─────────────────────────────────────────────── */
+    .btn-gold {
+      background: var(--gold);
+      color: #000;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      border-radius: 0.375rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.875rem;
+      letter-spacing: 0.025em;
+      transition: background 0.2s, transform 0.1s, opacity 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      border: none;
+      min-height: 44px;
+    }
+    .btn-gold:hover:not(:disabled) { background: var(--dark-gold); }
+    .btn-gold:active:not(:disabled) { transform: scale(0.98); }
+    .btn-gold:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      border-radius: 0.375rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.875rem;
+      transition: background 0.2s, color 0.2s, opacity 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      min-height: 44px;
+    }
+    .btn-outline:hover:not(:disabled) { background: var(--gold); color: #000; }
+    .btn-outline:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    /* ── Spinner ─────────────────────────────────────────────── */
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(212, 175, 55, 0.25);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      flex-shrink: 0;
+    }
+    .spinner-lg {
+      width: 36px; height: 36px;
+      border-width: 3px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Divider ─────────────────────────────────────────────── */
+    .gold-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.5rem 0;
+    }
+
+    /* ── Table ───────────────────────────────────────────────── */
+    .trow:nth-child(even) { background: rgba(255,255,255,0.02); }
+    .trow:hover { background: rgba(212,175,55,0.05); }
+
+    /* ── Modal ───────────────────────────────────────────────── */
+    .modal-backdrop {
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(6px);
+    }
+
+    /* ── Scrollbar ───────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.3); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* ── Nav border ──────────────────────────────────────────── */
+    .nav-gold-border { border-bottom: 1px solid rgba(212,175,55,0.2); }
+
+    /* ── Label ───────────────────────────────────────────────── */
+    .field-label {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #888;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Alert banners ───────────────────────────────────────── */
+    .alert-green {
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      color: #86efac;
+      border-radius: 0.375rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+    }
+    .alert-yellow {
+      background: rgba(234, 179, 8, 0.08);
+      border: 1px solid rgba(234, 179, 8, 0.25);
+      color: #fde047;
+      border-radius: 0.375rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+    }
+    .alert-red {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #fca5a5;
+      border-radius: 0.375rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════════════════════════════════ -->
+<div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
+  <div class="card p-8 w-full max-w-sm" data-aos="fade-up" data-aos-duration="700">
+
+    <div class="text-center mb-8">
+      <img src="/admin-static/Logo.png" alt="Apollo"
+           class="h-20 mx-auto mb-5"
+           onerror="this.style.display='none'">
+      <h1 class="text-4xl font-bold gold-text">Enrollment Engine</h1>
+      <p class="text-sm text-gray-500 mt-2 tracking-wide">Apollo Performing Arts & Academy</p>
+    </div>
+
+    <div id="loginError" class="hidden mb-5 alert-red"></div>
+
+    <div class="space-y-4">
+      <div>
+        <label class="field-label">Admin Password</label>
+        <input type="password" id="passwordInput" class="inp"
+               placeholder="Enter password"
+               onkeydown="if(event.key==='Enter') doLogin()">
+      </div>
+      <button onclick="doLogin()" id="loginBtn" class="btn-gold w-full justify-center">
+        <span id="loginBtnText">Sign In</span>
+        <span id="loginSpinner" class="hidden spinner"></span>
+      </button>
+    </div>
+
+    <p class="text-center text-xs text-gray-600 mt-6">
+      Local admin panel — not publicly accessible
+    </p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     DASHBOARD
+══════════════════════════════════════════════════════════ -->
+<div id="dashboard" class="hidden min-h-screen">
+
+  <!-- Top Navigation -->
+  <nav class="fixed w-full z-40 bg-black/95 backdrop-blur-sm nav-gold-border">
+    <div class="max-w-5xl mx-auto px-5 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <i class="fas fa-music gold-text text-sm"></i>
+        <h1 class="text-lg font-semibold tracking-wide" style="font-family:'Cormorant Garamond',serif;">
+          Apollo Enrollment Engine
+        </h1>
+      </div>
+      <div class="flex items-center gap-4">
+        <div id="healthDot" class="flex items-center gap-1.5 text-xs text-gray-500">
+          <span class="inline-block w-2 h-2 rounded-full bg-gray-600"></span>
+          <span id="healthLabel">Checking…</span>
+        </div>
+        <div class="w-px h-4 bg-white/10 hidden sm:block"></div>
+        <span class="text-sm text-gray-400 hidden sm:block">Robin Pandey</span>
+        <button onclick="doLogout()"
+                class="text-xs text-gray-500 hover:text-gold-text transition-colors flex items-center gap-1.5"
+                style="color:#888;">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="hidden sm:inline">Logout</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-5 pt-24 pb-16 space-y-6">
+
+    <!-- ─────────────────────────────────────────────────────
+         SECTION 1 — Check Calendly
+    ───────────────────────────────────────────────────────── -->
+    <div class="card p-6 sm:p-8" data-aos="fade-up">
+      <div class="flex items-center gap-3 mb-1">
+        <i class="fas fa-calendar-check gold-text text-lg"></i>
+        <h2 class="text-2xl font-bold gold-text">Check for New Booking</h2>
+      </div>
+      <p class="text-xs text-gray-500 mb-5 ml-8">
+        Scan Gmail for unread Calendly booking emails and auto-fill the form below.
+      </p>
+      <div class="gold-divider"></div>
+
+      <button onclick="scanCalendly()" id="scanBtn" class="btn-gold">
+        <i class="fas fa-search"></i>
+        <span id="scanBtnText">Scan Calendly Emails</span>
+        <span id="scanSpinner" class="hidden spinner"></span>
+      </button>
+
+      <div id="scanResult" class="hidden mt-5"></div>
+    </div>
+
+
+    <!-- ─────────────────────────────────────────────────────
+         SECTION 2 — Enrollment Form
+    ───────────────────────────────────────────────────────── -->
+    <div class="card p-6 sm:p-8" data-aos="fade-up" data-aos-delay="80">
+      <div class="flex items-center gap-3 mb-1">
+        <i class="fas fa-envelope-open-text gold-text text-lg"></i>
+        <h2 class="text-2xl font-bold gold-text">Create Enrollment Draft</h2>
+      </div>
+      <p class="text-xs text-gray-500 mb-5 ml-8">
+        Fill in the details and create a Gmail draft for the parent.
+      </p>
+      <div class="gold-divider"></div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="field-label">Parent Name <span class="text-gold-text" style="color:var(--gold);">*</span></label>
+          <input type="text" id="parentName" class="inp" placeholder="e.g. Rajesh Kumar">
+        </div>
+        <div>
+          <label class="field-label">Parent Email <span style="color:var(--gold);">*</span></label>
+          <input type="email" id="parentEmail" class="inp" placeholder="e.g. rajesh@gmail.com">
+        </div>
+        <div>
+          <label class="field-label">Student Name <span style="color:var(--gold);">*</span></label>
+          <input type="text" id="studentName" class="inp" placeholder="e.g. Yash">
+        </div>
+        <div>
+          <label class="field-label">Instrument <span style="color:var(--gold);">*</span></label>
+          <input type="text" id="instrument" class="inp" placeholder="e.g. Guitar, Piano, Violin">
+        </div>
+        <div>
+          <label class="field-label">Son or Daughter?</label>
+          <select id="gender" class="inp">
+            <option value="">Select…</option>
+            <option value="daughter">Daughter</option>
+            <option value="son">Son</option>
+            <option value="daughters">Daughters (multiple girls)</option>
+            <option value="sons">Sons (multiple boys)</option>
+            <option value="son and daughter">Son and Daughter</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Available Days & Times <span style="color:var(--gold);">*</span></label>
+          <input type="text" id="availability" class="inp"
+                 placeholder="e.g. Monday 7:30pm and Thursday 7pm">
+        </div>
+      </div>
+
+      <div id="draftError"   class="hidden mt-4 alert-red"></div>
+      <div id="draftSuccess" class="hidden mt-4 alert-green"></div>
+
+      <div class="flex flex-col sm:flex-row gap-3 mt-6">
+        <button onclick="previewEmail()" id="previewBtn" class="btn-outline">
+          <i class="fas fa-eye"></i>
+          <span>Preview Email</span>
+          <span id="previewSpinner" class="hidden spinner"></span>
+        </button>
+        <button onclick="createDraft()" id="draftBtn" class="btn-gold">
+          <i class="fas fa-paper-plane"></i>
+          <span id="draftBtnText">Create Gmail Draft</span>
+          <span id="draftSpinner" class="hidden spinner"></span>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- ─────────────────────────────────────────────────────
+         SECTION 3 — Recent Drafts
+    ───────────────────────────────────────────────────────── -->
+    <div class="card p-6 sm:p-8" data-aos="fade-up" data-aos-delay="160">
+      <div class="flex items-center justify-between mb-1">
+        <div class="flex items-center gap-3">
+          <i class="fas fa-history gold-text text-lg"></i>
+          <h2 class="text-2xl font-bold gold-text">Recent Drafts</h2>
+        </div>
+        <button onclick="loadHistory()"
+                class="text-xs flex items-center gap-1.5 transition-colors"
+                style="color:#888;" onmouseover="this.style.color='#D4AF37'" onmouseout="this.style.color='#888'">
+          <i class="fas fa-sync-alt"></i>
+          <span>Refresh</span>
+        </button>
+      </div>
+      <p class="text-xs text-gray-500 mb-5 ml-8">Last 20 enrollment drafts created.</p>
+      <div class="gold-divider"></div>
+
+      <!-- Loading -->
+      <div id="historyLoading" class="flex justify-center py-10">
+        <div class="spinner spinner-lg"></div>
+      </div>
+
+      <!-- Empty -->
+      <div id="historyEmpty" class="hidden text-center py-10 text-gray-600 text-sm">
+        <i class="fas fa-inbox text-2xl mb-3 block" style="color:#333;"></i>
+        No drafts logged yet.
+      </div>
+
+      <!-- Desktop table -->
+      <div id="historyTable" class="hidden overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr style="border-bottom:1px solid rgba(212,175,55,0.15);">
+              <th class="text-left py-3 px-3 field-label">Date</th>
+              <th class="text-left py-3 px-3 field-label">Parent</th>
+              <th class="text-left py-3 px-3 field-label">Student</th>
+              <th class="text-left py-3 px-3 field-label">Instrument</th>
+              <th class="text-left py-3 px-3 field-label">Draft ID</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Mobile cards -->
+      <div id="historyCards" class="hidden space-y-3"></div>
+    </div>
+
+  </main>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     EMAIL PREVIEW MODAL
+══════════════════════════════════════════════════════════ -->
+<div id="previewModal"
+     class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop"
+     onclick="if(event.target===this) closeModal()">
+
+  <div class="card w-full max-w-2xl flex flex-col"
+       style="max-height:88vh;" data-aos="zoom-in" data-aos-duration="250">
+
+    <!-- Modal header -->
+    <div class="flex items-center justify-between px-6 py-5"
+         style="border-bottom:1px solid rgba(212,175,55,0.15);">
+      <div class="flex items-center gap-3">
+        <i class="fas fa-envelope gold-text"></i>
+        <h3 class="text-xl font-bold gold-text">Email Preview</h3>
+      </div>
+      <button onclick="closeModal()"
+              class="text-gray-500 hover:text-white transition-colors text-lg">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="overflow-y-auto px-6 py-5 flex-1">
+      <pre id="previewContent"
+           class="whitespace-pre-wrap font-sans text-sm leading-relaxed"
+           style="color:#d1d5db;"></pre>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="px-6 py-5 flex justify-end gap-3"
+         style="border-top:1px solid rgba(212,175,55,0.15);">
+      <button onclick="closeModal()" class="btn-outline py-2 px-5 text-sm">
+        Close
+      </button>
+      <button onclick="createDraftFromModal()" class="btn-gold py-2 px-5 text-sm">
+        <i class="fas fa-paper-plane"></i>
+        Create Draft
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════════ -->
+<script>
+  const API           = 'http://localhost:5000';
+  const TOKEN_KEY     = 'apollo_token';
+  const LOGIN_TIME_KEY = 'apollo_login_time';
+  const SESSION_MS    = 8 * 3600 * 1000;   // 8 hours
+
+  // ── Init ───────────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', () => {
+    AOS.init({ duration: 600, once: true });
+    if (getToken() && isSessionValid()) {
+      showDashboard();
+    }
+  });
+
+  // ── Auth helpers ───────────────────────────────────────────
+  function getToken()  { return localStorage.getItem(TOKEN_KEY); }
+  function setToken(t) {
+    localStorage.setItem(TOKEN_KEY, t);
+    localStorage.setItem(LOGIN_TIME_KEY, Date.now().toString());
+  }
+  function clearToken() {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(LOGIN_TIME_KEY);
+  }
+  function isSessionValid() {
+    const t = localStorage.getItem(LOGIN_TIME_KEY);
+    return t && (Date.now() - parseInt(t)) < SESSION_MS;
+  }
+  function authHeaders() {
+    return { 'Content-Type': 'application/json',
+             'Authorization': `Bearer ${getToken()}` };
+  }
+
+  function showDashboard() {
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('dashboard').classList.remove('hidden');
+    AOS.refresh();
+    checkHealth();
+    loadHistory();
+  }
+  function showLogin() {
+    document.getElementById('dashboard').classList.add('hidden');
+    document.getElementById('loginScreen').classList.remove('hidden');
+  }
+
+  // ── Login ──────────────────────────────────────────────────
+  async function doLogin() {
+    const pwd = document.getElementById('passwordInput').value.trim();
+    if (!pwd) return;
+
+    setBtnLoading('loginBtn', 'loginBtnText', 'loginSpinner', 'Signing In…');
+    document.getElementById('loginError').classList.add('hidden');
+
+    try {
+      const res  = await fetch(`${API}/api/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pwd })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setToken(data.token);
+        showDashboard();
+      } else {
+        showMsg('loginError', '<i class="fas fa-lock mr-2"></i>Incorrect password.');
+        document.getElementById('passwordInput').value = '';
+      }
+    } catch(e) {
+      showMsg('loginError',
+        '<i class="fas fa-exclamation-triangle mr-2"></i>Cannot reach server. Is app.py running?');
+    } finally {
+      clearBtnLoading('loginBtn', 'loginBtnText', 'loginSpinner', 'Sign In');
+    }
+  }
+
+  function doLogout() {
+    clearToken();
+    showLogin();
+  }
+
+  // ── Health check ───────────────────────────────────────────
+  async function checkHealth() {
+    const dot   = document.getElementById('healthDot');
+    const label = document.getElementById('healthLabel');
+    try {
+      const res  = await fetch(`${API}/api/health`, { signal: AbortSignal.timeout(4000) });
+      const data = await res.json();
+      if (data.status === 'online') {
+        dot.querySelector('span').className = 'inline-block w-2 h-2 rounded-full bg-green-500';
+        label.textContent = 'Online';
+        label.style.color = '#86efac';
+      }
+    } catch(e) {
+      dot.querySelector('span').className = 'inline-block w-2 h-2 rounded-full bg-red-500';
+      label.textContent = 'Server offline';
+      label.style.color = '#fca5a5';
+    }
+  }
+
+  // ── Scan Calendly ──────────────────────────────────────────
+  async function scanCalendly() {
+    setBtnLoading('scanBtn', 'scanBtnText', 'scanSpinner', 'Scanning…');
+    const resultDiv = document.getElementById('scanResult');
+    resultDiv.classList.add('hidden');
+
+    try {
+      const res  = await fetch(`${API}/api/check-calendly`, { headers: authHeaders() });
+      if (res.status === 401) { doLogout(); return; }
+      const data = await res.json();
+
+      if (data.error) throw new Error(data.error);
+
+      if (data.found) {
+        const instrLabel = data.instrument || 'Instrument TBD';
+        resultDiv.innerHTML = `
+          <div class="alert-green">
+            <div class="flex items-start gap-2">
+              <i class="fas fa-check-circle mt-0.5 flex-shrink-0"></i>
+              <div>
+                <div class="font-semibold mb-1">
+                  Booking Found — ${esc(data.student_name)} (${esc(instrLabel)})
+                </div>
+                ${data.lesson_date
+                  ? `<div class="text-xs opacity-75">
+                       <i class="fas fa-calendar-alt mr-1"></i>
+                       ${esc(data.lesson_date)} ${esc(data.lesson_time)}
+                     </div>` : ''}
+                <div class="text-xs opacity-75 mt-1">
+                  <i class="fas fa-user mr-1"></i>${esc(data.parent_name)}
+                  &nbsp;·&nbsp;
+                  <i class="fas fa-envelope mr-1"></i>${esc(data.parent_email)}
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mt-2 ml-1">
+            <i class="fas fa-arrow-down mr-1"></i>Form auto-filled below — add gender & availability then create draft.
+          </p>`;
+        setField('parentName',  data.parent_name);
+        setField('parentEmail', data.parent_email);
+        setField('studentName', data.student_name);
+        setField('instrument',  data.instrument);
+        setTimeout(() => {
+          document.getElementById('parentName')
+            .scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+      } else {
+        resultDiv.innerHTML = `
+          <div class="alert-yellow">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-inbox flex-shrink-0"></i>
+              <span>No new Calendly bookings — use manual entry below.</span>
+            </div>
+          </div>`;
+      }
+      resultDiv.classList.remove('hidden');
+    } catch(e) {
+      resultDiv.innerHTML = `<div class="alert-red"><i class="fas fa-exclamation-circle mr-2"></i>Error: ${esc(e.message)}</div>`;
+      resultDiv.classList.remove('hidden');
+    } finally {
+      clearBtnLoading('scanBtn', 'scanBtnText', 'scanSpinner', 'Scan Calendly Emails');
+    }
+  }
+
+  // ── Preview email ──────────────────────────────────────────
+  async function previewEmail() {
+    const payload = getFormData();
+    if (!validateForm(payload)) return;
+
+    document.getElementById('previewSpinner').classList.remove('hidden');
+    document.getElementById('previewBtn').disabled = true;
+
+    try {
+      const res  = await fetch(`${API}/api/preview-email`, {
+        method: 'POST', headers: authHeaders(), body: JSON.stringify(payload)
+      });
+      if (res.status === 401) { doLogout(); return; }
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+
+      document.getElementById('previewContent').textContent = data.email_body;
+      document.getElementById('previewModal').classList.remove('hidden');
+    } catch(e) {
+      showMsg('draftError', `<i class="fas fa-exclamation-circle mr-2"></i>Preview failed: ${esc(e.message)}`);
+    } finally {
+      document.getElementById('previewSpinner').classList.add('hidden');
+      document.getElementById('previewBtn').disabled = false;
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('previewModal').classList.add('hidden');
+  }
+  async function createDraftFromModal() {
+    closeModal();
+    await createDraft();
+  }
+
+  // ── Create draft ───────────────────────────────────────────
+  async function createDraft() {
+    const payload = getFormData();
+    if (!validateForm(payload)) return;
+
+    setBtnLoading('draftBtn', 'draftBtnText', 'draftSpinner', 'Creating…');
+    document.getElementById('draftError').classList.add('hidden');
+    document.getElementById('draftSuccess').classList.add('hidden');
+
+    try {
+      const res  = await fetch(`${API}/api/create-draft`, {
+        method: 'POST', headers: authHeaders(), body: JSON.stringify(payload)
+      });
+      if (res.status === 401) { doLogout(); return; }
+      const data = await res.json();
+
+      if (data.success) {
+        document.getElementById('draftSuccess').innerHTML =
+          `<i class="fas fa-check-circle mr-2"></i>
+           Draft Created! ID: <span class="font-mono" style="color:var(--gold);">${esc(data.draft_id)}</span>`;
+        document.getElementById('draftSuccess').classList.remove('hidden');
+        clearForm();
+        setTimeout(loadHistory, 1200);
+        setTimeout(() => document.getElementById('draftSuccess').classList.add('hidden'), 9000);
+      } else {
+        throw new Error(data.error || 'Unknown error');
+      }
+    } catch(e) {
+      showMsg('draftError', `<i class="fas fa-exclamation-circle mr-2"></i>Failed: ${esc(e.message)}`);
+    } finally {
+      clearBtnLoading('draftBtn', 'draftBtnText', 'draftSpinner', 'Create Gmail Draft');
+    }
+  }
+
+  // ── History ────────────────────────────────────────────────
+  async function loadHistory() {
+    document.getElementById('historyLoading').classList.remove('hidden');
+    document.getElementById('historyTable').classList.add('hidden');
+    document.getElementById('historyCards').classList.add('hidden');
+    document.getElementById('historyEmpty').classList.add('hidden');
+
+    try {
+      const res     = await fetch(`${API}/api/history`, { headers: authHeaders() });
+      if (res.status === 401) { doLogout(); return; }
+      const entries = await res.json();
+
+      document.getElementById('historyLoading').classList.add('hidden');
+
+      if (!Array.isArray(entries) || !entries.length) {
+        document.getElementById('historyEmpty').classList.remove('hidden');
+        return;
+      }
+
+      // Desktop table
+      document.getElementById('historyTableBody').innerHTML = entries.map(e => `
+        <tr class="trow" style="border-bottom:1px solid rgba(255,255,255,0.04);">
+          <td class="py-3 px-3 text-xs text-gray-500">${esc(e.date || '—')}</td>
+          <td class="py-3 px-3 text-sm">${esc(e.parent || '—')}</td>
+          <td class="py-3 px-3 text-sm">${esc(e.student || '—')}</td>
+          <td class="py-3 px-3 text-sm gold-text">${esc(e.instrument || '—')}</td>
+          <td class="py-3 px-3 text-xs font-mono" style="color:#c084fc;">${esc(e.draft_id || '—')}</td>
+        </tr>`).join('');
+      document.getElementById('historyTable').classList.remove('hidden');
+
+      // Mobile cards
+      document.getElementById('historyCards').innerHTML = entries.map(e => `
+        <div class="p-4 rounded space-y-2" style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.06);">
+          <div class="flex justify-between items-start">
+            <span class="font-medium text-sm">${esc(e.parent || '—')}</span>
+            <span class="text-xs text-gray-600">${esc(e.date || '—')}</span>
+          </div>
+          <div class="text-xs text-gray-500">
+            Student: <span class="text-white">${esc(e.student || '—')}</span>
+          </div>
+          <div class="text-xs text-gray-500">
+            Instrument: <span class="gold-text">${esc(e.instrument || '—')}</span>
+          </div>
+          <div class="text-xs text-gray-500">
+            Draft ID: <span class="font-mono" style="color:#c084fc;">${esc(e.draft_id || '—')}</span>
+          </div>
+        </div>`).join('');
+      document.getElementById('historyCards').classList.remove('hidden');
+
+    } catch(e) {
+      document.getElementById('historyLoading').classList.add('hidden');
+      document.getElementById('historyEmpty').innerHTML =
+        `<i class="fas fa-exclamation-circle text-red-500 text-2xl mb-2 block"></i>
+         <span class="text-red-400 text-sm">Failed to load history</span>`;
+      document.getElementById('historyEmpty').classList.remove('hidden');
+    }
+  }
+
+  // ── Helpers ────────────────────────────────────────────────
+  function getFormData() {
+    return {
+      parent_name:  document.getElementById('parentName').value.trim(),
+      parent_email: document.getElementById('parentEmail').value.trim(),
+      student_name: document.getElementById('studentName').value.trim(),
+      instrument:   document.getElementById('instrument').value.trim(),
+      gender:       document.getElementById('gender').value,
+      availability: document.getElementById('availability').value.trim(),
+    };
+  }
+
+  function validateForm(d) {
+    if (!d.parent_name || !d.parent_email || !d.student_name || !d.instrument || !d.availability) {
+      showMsg('draftError', '<i class="fas fa-exclamation-circle mr-2"></i>Please fill in all required fields (*).');
+      return false;
+    }
+    return true;
+  }
+
+  function clearForm() {
+    ['parentName','parentEmail','studentName','instrument','availability'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('gender').value = '';
+  }
+
+  function setField(id, val) {
+    if (val) document.getElementById(id).value = val;
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;');
+  }
+
+  function showMsg(id, html, autoClear = true) {
+    const el = document.getElementById(id);
+    el.innerHTML = html;
+    el.classList.remove('hidden');
+    if (autoClear) setTimeout(() => el.classList.add('hidden'), 6000);
+  }
+
+  function setBtnLoading(btnId, textId, spinnerId, loadingText) {
+    document.getElementById(btnId).disabled = true;
+    if (textId)    document.getElementById(textId).textContent = loadingText;
+    document.getElementById(spinnerId).classList.remove('hidden');
+  }
+  function clearBtnLoading(btnId, textId, spinnerId, originalText) {
+    document.getElementById(btnId).disabled = false;
+    if (textId)    document.getElementById(textId).textContent = originalText;
+    document.getElementById(spinnerId).classList.add('hidden');
+  }
+
+  // Responsive: show table on md+, cards on smaller
+  function applyHistoryLayout() {
+    const isDesktop = window.innerWidth >= 768;
+    const tbl   = document.getElementById('historyTable');
+    const cards = document.getElementById('historyCards');
+    if (!tbl || !cards) return;
+    const hasData = !tbl.classList.contains('hidden') || !cards.classList.contains('hidden');
+    if (!hasData) return;
+    tbl.classList.toggle('hidden', !isDesktop);
+    cards.classList.toggle('hidden', isDesktop);
+  }
+  window.addEventListener('resize', applyHistoryLayout);
+
+  // Keyboard: Escape closes modal
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
+
+</body>
+</html>

@@ -213,7 +213,7 @@
     <nav class="fixed w-full z-50 transition-all duration-300 bg-black/80 backdrop-blur-sm" id="navbar">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <a href="#" class="flex items-center space-x-3">
-                <img src="Logo.png" alt="Apollo Performing Arts & Academy" class="h-12">
+                <img src="Logo.png" alt="Apollo Performing Arts & Academy" class="h-12" id="nav-logo">
                 <div class="hidden md:block">
                     <div class="text-white font-bold text-lg leading-tight">Apollo Performing Arts</div>
                     <div class="text-gold text-sm leading-tight">& Academy</div>
@@ -986,6 +986,49 @@
                 mobileMenu.classList.add('hidden');
             });
         });
+    </script>
+    <script>
+        // Admin access: triple click/tap or Ctrl+Shift+A → redirect to admin panel
+        (function () {
+            var logo = document.getElementById('nav-logo');
+            var clickCount = 0;
+            var clickTimer = null;
+
+            logo.addEventListener('click', function () {
+                clickCount++;
+                if (clickCount === 1) {
+                    clickTimer = setTimeout(function () { clickCount = 0; }, 600);
+                }
+                if (clickCount >= 3) {
+                    clearTimeout(clickTimer);
+                    clickCount = 0;
+                    window.location.href = 'http://localhost:5000/admin';
+                }
+            });
+
+            // Mobile triple tap
+            var tapCount = 0;
+            var tapTimer = null;
+            logo.addEventListener('touchend', function (e) {
+                e.preventDefault();
+                tapCount++;
+                if (tapCount === 1) {
+                    tapTimer = setTimeout(function () { tapCount = 0; }, 600);
+                }
+                if (tapCount >= 3) {
+                    clearTimeout(tapTimer);
+                    tapCount = 0;
+                    window.location.href = 'http://localhost:5000/admin';
+                }
+            });
+
+            // Ctrl+Shift+A keyboard shortcut
+            document.addEventListener('keydown', function (e) {
+                if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+                    window.location.href = 'http://localhost:5000/admin';
+                }
+            });
+        })();
     </script>
 </body>
 
