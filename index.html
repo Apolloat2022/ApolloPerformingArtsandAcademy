@@ -1002,7 +1002,7 @@
                 if (clickCount >= 3) {
                     clearTimeout(clickTimer);
                     clickCount = 0;
-                    window.location.href = 'http://localhost:5000/admin';
+                    window.location.href = 'https://robinpandey.pythonanywhere.com/admin';
                 }
             });
 
@@ -1018,14 +1018,14 @@
                 if (tapCount >= 3) {
                     clearTimeout(tapTimer);
                     tapCount = 0;
-                    window.location.href = 'http://localhost:5000/admin';
+                    window.location.href = 'https://robinpandey.pythonanywhere.com/admin';
                 }
             });
 
             // Ctrl+Shift+A keyboard shortcut
             document.addEventListener('keydown', function (e) {
                 if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-                    window.location.href = 'http://localhost:5000/admin';
+                    window.location.href = 'https://robinpandey.pythonanywhere.com/admin';
                 }
             });
         })();
