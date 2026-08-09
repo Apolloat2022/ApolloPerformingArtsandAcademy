@@ -254,7 +254,10 @@
         /* --- Film grain ---------------------------------------------- */
         .grain {
             position: fixed;
-            inset: -150%;
+            /* Just enough overscan to hide the edges while it jitters. Keep this
+               small: the element is a permanently animating composited layer, so
+               its area is paid for in GPU memory on every device. */
+            inset: -12%;
             z-index: 45;
             pointer-events: none;
             opacity: .035;
@@ -270,6 +273,14 @@
             60% { transform: translate3d(-2%, -2%, 0); }
             80% { transform: translate3d(3%, 1%, 0); }
             100% { transform: translate3d(0, 0, 0); }
+        }
+
+        /* Grain is a nicety, not structure — drop it on small screens, where the
+           memory matters most and the effect is least visible. */
+        @media (max-width: 767px) {
+            .grain {
+                display: none;
+            }
         }
 
         /* --- Hero ----------------------------------------------------- */
