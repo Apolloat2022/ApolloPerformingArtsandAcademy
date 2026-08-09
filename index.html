@@ -109,7 +109,8 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- Critical hero art: fetch immediately so the opening frame never flashes black -->
-    <link rel="preload" as="image" href="img/hero.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="img/hero-wide.webp" media="(min-width: 768px)" fetchpriority="high">
+    <link rel="preload" as="image" href="img/hero-portrait.webp" media="(max-width: 767px)" fetchpriority="high">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -279,22 +280,28 @@
             isolation: isolate;
         }
 
+        /* Keeps <picture> from adding a stray inline box around the absolute image */
+        .hero picture {
+            display: contents;
+        }
+
         .hero-img {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 42%;
+            object-position: center 45%;
             z-index: -3;
-            /* Slow Ken Burns push — the single biggest "this is alive" cue */
-            animation: kenburns 28s ease-in-out infinite alternate;
+            /* Slow Ken Burns push — the single biggest "this is alive" cue.
+               Kept shallow so the stage composition stays readable. */
+            animation: kenburns 30s ease-in-out infinite alternate;
             will-change: transform;
         }
 
         @keyframes kenburns {
-            from { transform: scale(1.05) translate3d(0, 0, 0); }
-            to   { transform: scale(1.16) translate3d(-1.5%, -2%, 0); }
+            from { transform: scale(1.02) translate3d(0, 0, 0); }
+            to   { transform: scale(1.09) translate3d(-1%, -1.2%, 0); }
         }
 
         /* Layered scrim: keeps text legible and pushes the photo back into depth */
@@ -687,8 +694,13 @@
 
     <!-- Hero Section -->
     <section class="hero flex items-center justify-center text-white">
-        <img src="img/hero.webp" alt="Apollo students performing together on a lit stage" class="hero-img" width="1400"
-            height="1400" fetchpriority="high">
+        <!-- A 16:9 crop keeps the light rig in frame on desktop; phones get a taller
+             crop so the composition is not scaled up to fill a narrow viewport. -->
+        <picture>
+            <source media="(min-width: 768px)" srcset="img/hero-wide.webp" width="1920" height="1080">
+            <img src="img/hero-portrait.webp" alt="Apollo students performing together on a lit stage"
+                class="hero-img" width="1100" height="939" fetchpriority="high">
+        </picture>
         <div class="hero-scrim" aria-hidden="true"></div>
         <div class="hero-bloom" aria-hidden="true"></div>
 
